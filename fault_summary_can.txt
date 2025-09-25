@@ -1,0 +1,36 @@
+ECU2 CAN Fault Summary
+======================
+Total messages: 21
+Received: 8
+Not Received: 18
+  - Timeouts: 5
+  - Corruptions: 2
+  - Losses: 3
+  - Delayed: 0
+
+Message 0: not received (timeout)
+Message 0: not received (invalid frame)
+Message 0: not received (timeout)
+Message 0: not received (loss/mismatch, got seq=2, RTT=0.33 ms)
+Message 3: received (RTT=0.32 ms)
+Message 4: received (RTT=0.32 ms)
+Message 5: not received (timeout)
+Message 5: not received (invalid frame)
+Message 5: not received (invalid frame)
+Message 5: not received (invalid frame)
+Message 5: not received (invalid frame)
+Message 5: not received (loss/mismatch, got seq=9, RTT=0.35 ms)
+Message 10: received (RTT=0.27 ms)
+Message 11: received (RTT=0.34 ms)
+Message 12: received (RTT=0.27 ms)
+Message 13: not received (corruption, RTT=0.31 ms)
+Message 14: received (RTT=0.25 ms)
+Message 15: received (RTT=0.35 ms)
+Message 16: not received (corruption, RTT=0.35 ms)
+Message 17: not received (timeout)
+Message 17: not received (invalid frame)
+Message 17: not received (timeout)
+Message 17: not received (invalid frame)
+Message 17: not received (invalid frame)
+Message 17: not received (loss/mismatch, got seq=20, RTT=0.45 ms)
+Message 21: received (RTT=0.24 ms)
