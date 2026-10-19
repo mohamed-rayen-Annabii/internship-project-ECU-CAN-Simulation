@@ -1,10 +1,10 @@
-ECU CAN Simulation with Fault Injection
+## ECU CAN Simulation with Fault Injection
 
 A Linux-based simulation of two Electronic Control Units (ECUs) communicating over a virtual CAN bus, with a built-in fault injection framework.
 
 Test how ECU software behaves when the CAN network experiences packet loss, delay, corruption, or a completely blocked link — all without physical hardware.
 
-Overview
+## Overview
 
 This project simulates automotive communication under faulty network conditions using Linux kernel features:
 
@@ -32,7 +32,7 @@ Controller script: Manages setup, execution, fault injection, reset, and teardow
 └── fault_summary_can.txt # Example fault summary
 ```
 
-Prerequisites
+## Prerequisites
 
 Install the required packages on Ubuntu or Debian:
 
@@ -43,6 +43,7 @@ Getting Started
 
 Clone the repository and build the project:
 
+```bash
 git clone https://github.com/mohamed-rayen-Annabii/internship-project-ECU-CAN-Simulation.git
 
 cd internship-project-ECU-CAN-Simulation
@@ -50,8 +51,9 @@ cd internship-project-ECU-CAN-Simulation
 make
 
 chmod +x *.sh faults/*.sh test/*.sh
+```
 
-Usage
+## Usage
 1. Start the simulation
 
 Run these commands in Terminal 1:
