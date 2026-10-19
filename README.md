@@ -14,7 +14,9 @@ CAN gateway (cangw): Forward CAN frames through a dedicated fault namespace.
 Fault injection: Use tc netem and iptables to simulate network failures.
 C++17 ECU programs: ecu1 acts as the client, while ecu2 acts as the server.
 Controller script: Manages setup, execution, fault injection, reset, and teardown.
-Project Structure
+## Project Structure
+```text
+
 ├── src/                  # ECU source code (ecu1.cpp, ecu2.cpp)
 ├── build/                # Compiled binaries
 ├── faults/               # Fault injection scripts
@@ -28,6 +30,7 @@ Project Structure
 ├── run_ecu1.sh           # Runs ECU1 manually
 ├── run_ecu2.sh           # Runs ECU2 manually
 └── fault_summary_can.txt # Example fault summary
+```
 
 Prerequisites
 
