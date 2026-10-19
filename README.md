@@ -1,50 +1,84 @@
 ECU CAN Simulation with Fault Injection
 
-A Linux-based simulation of two Electronic Control Units (ECUs) communicating over a virtual CAN bus, with a built-in fault injection framework. It lets you test how ECU software behaves when the CAN network is degraded by packet loss, delay, corruption, or a fully blocked link, all without any physical hardware.
+A Linux-based simulation of two Electronic Control Units (ECUs) communicating over a virtual CAN bus, with a built-in fault injection framework.
 
-Testing automotive communication under faulty network conditions normally requires dedicated hardware. This project reproduces that setup entirely in software using Linux kernel features:
-Network namespaces isolate each ECU, so every one behaves like a separate node.
-Virtual CAN tunnels (vxcan) connect the namespaces.
-A dedicated fault namespace sits between the two ECUs. A CAN gateway (cangw) forwards frames through it, and this is where faults are injected using tc netem and iptables.
-Two C++17 programs (ecu1 as client, ecu2 as server) exchange CAN frames and record what was received, lost, delayed, or corrupted.
-A controller script drives the whole workflow: setup, run, inject, reset, and teardown.
+Test how ECU software behaves when the CAN network experiences packet loss, delay, corruption, or a completely blocked link — all without physical hardware.
 
-Project Structure :
+Overview
 
+This project simulates automotive communication under faulty network conditions using Linux kernel features:
+
+Network namespaces: Isolate each ECU as a separate network node.
+Virtual CAN tunnels (vxcan): Connect the namespaces.
+CAN gateway (cangw): Forward CAN frames through a dedicated fault namespace.
+Fault injection: Use tc netem and iptables to simulate network failures.
+C++17 ECU programs: ecu1 acts as the client, while ecu2 acts as the server.
+Controller script: Manages setup, execution, fault injection, reset, and teardown.
+Project Structure
 ├── src/                  # ECU source code (ecu1.cpp, ecu2.cpp)
-├── build/                # Compiled binaries (ecu1, ecu2), created by make
-├── faults/               # Fault injection scripts (loss, delay, corruption, block, reset)
-├── test/                 # Test flags, logs and summary generation
-├── logs/                 # ECU runtime logs, created on first run
+├── build/                # Compiled binaries
+├── faults/               # Fault injection scripts
+├── test/                 # Test flags, logs, and summaries
+├── logs/                 # ECU runtime logs
 ├── Makefile              # Builds both ECUs
-├── controller.sh         # Main entry point: start / run / inject / reset / stop
-├── setup_netns.sh        # Creates namespaces, vxcan links, and cangw forwarding
-├── cleanup.sh            # Removes namespaces, interfaces, and leftover processes
-├── inject_combo.sh       # Applies several faults at the same time
-├── run_ecu1.sh           # Runs ECU1 manually inside its namespace
-├── run_ecu2.sh           # Runs ECU2 manually inside its namespace
-└── fault_summary_can.txt # Example fault summary output
+├── controller.sh         # Main controller
+├── setup_netns.sh        # Creates namespaces and virtual links
+├── cleanup.sh            # Cleans up resources
+├── inject_combo.sh       # Applies combined faults
+├── run_ecu1.sh           # Runs ECU1 manually
+├── run_ecu2.sh           # Runs ECU2 manually
+└── fault_summary_can.txt # Example fault summary
 
+Prerequisites
 
-Prerequisites :
+Install the required packages on Ubuntu or Debian:
+
 sudo apt update
 sudo apt install -y build-essential iproute2 can-utils iptables expect
-Getting Started :
+
+Getting Started
+
+Clone the repository and build the project:
+
 git clone https://github.com/mohamed-rayen-Annabii/internship-project-ECU-CAN-Simulation.git
+
 cd internship-project-ECU-CAN-Simulation
+
 make
+
 chmod +x *.sh faults/*.sh test/*.sh
 
-Usage :
-in Terminal 1 :
-./controller.sh start     # Create namespaces, vxcan links, and cangw forwarding
-./controller.sh run       # Launch ECU1 and ECU2; output is also saved to logs/
+Usage
+1. Start the simulation
 
-in Terminal 2 :
-./controller.sh inject delay                       # one fault, both directions
-./controller.sh inject loss --iface=fault1         # one fault, one direction
-./controller.sh inject delay loss corruption       # combined faults
-./controller.sh reset                              # remove all faults
+Run these commands in Terminal 1:
 
-./controller.sh stop      # Stop ECUs, reset faults, clean up, generate the test summary at test/results.md
+sudo ./controller.sh start
+sudo ./controller.sh run
 
+2. Inject network faults
+
+In Terminal 2, inject one or more faults:
+
+Simulate delay in both directions:
+
+sudo ./controller.sh inject delay
+
+
+Simulate packet loss in one direction:
+
+sudo ./controller.sh inject loss --iface=fault1
+
+
+Combine multiple faults:
+
+sudo ./controller.sh inject delay loss corruption
+
+3. Reset faults
+sudo ./controller.sh reset
+
+4. Stop the simulation and generate the summary
+sudo ./controller.sh stop
+
+
+The controller stops the ECUs, cleans up network resources, and generates the test summary at test/results.md.
