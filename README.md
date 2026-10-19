@@ -58,32 +58,42 @@ chmod +x *.sh faults/*.sh test/*.sh
 
 Run these commands in Terminal 1:
 
+```bash
 sudo ./controller.sh start
 sudo ./controller.sh run
+```
 
 2. Inject network faults
 
 In Terminal 2, inject one or more faults:
 
 Simulate delay in both directions:
-
+```bash
 sudo ./controller.sh inject delay
+```
 
 
 Simulate packet loss in one direction:
-
+```bash
 sudo ./controller.sh inject loss --iface=fault1
+```
 
 
 Combine multiple faults:
-
+```bash
 sudo ./controller.sh inject delay loss corruption
+```
 
 3. Reset faults
+```bash
 sudo ./controller.sh reset
+```
 
 4. Stop the simulation and generate the summary
+```bash
 sudo ./controller.sh stop
+```
+
 
 
 The controller stops the ECUs, cleans up network resources, and generates the test summary at test/results.md.
